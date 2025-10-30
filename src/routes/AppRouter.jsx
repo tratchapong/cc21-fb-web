@@ -1,9 +1,11 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router'
 import UserLayout from '../layouts/UserLayout'
-import Login from '../pages/Login'
-import Home from '../pages/Home'
-import Friends from '../pages/Friends'
-import Profile from '../pages/Profile'
+import { lazy, Suspense } from 'react'
+
+const Login = lazy(()=>import('../pages/Login'))
+const Home = lazy(()=>import('../pages/Home'))
+const Friends = lazy(()=>import('../pages/Friends'))
+const Profile = lazy(()=>import('../pages/Profile'))
 
 const guestRouter = createBrowserRouter([
 	{ path : '/', element: <Login />},
@@ -19,15 +21,16 @@ const userRouter = createBrowserRouter([
 		{ path : '*', element: <Navigate to='/' />},
 		]
 	},
-
-
 ])
 
 function AppRouter() {
-	const user = {username : 'andy'}
+	const user = null
+	// const user = {username : 'andy'}
 	const finalRouter = user ? userRouter : guestRouter
 	return (
-		<RouterProvider router={finalRouter}/>
+		<Suspense fallback={<div>Loading...</div>}>
+			<RouterProvider router={finalRouter}/>
+		</Suspense>
 	)
 }
 
