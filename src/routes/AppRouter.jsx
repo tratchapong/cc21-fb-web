@@ -1,17 +1,21 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router'
 import UserLayout from '../layouts/UserLayout'
+import Login from '../pages/Login'
+import Home from '../pages/Home'
+import Friends from '../pages/Friends'
+import Profile from '../pages/Profile'
 
 const guestRouter = createBrowserRouter([
-	{ path : '/', element: <p>Login</p>},
+	{ path : '/', element: <Login />},
 	{ path : '*', element: <Navigate to='/' />}
 ])
 
 const userRouter = createBrowserRouter([
 	{ path : '/', element: <UserLayout />,
 		children : [
-		{ path : '', element: <p>Home page</p>},
-		{ path : 'friends', element: <p>Friends page</p>},
-		{ path : 'profile', element: <p>Profile page</p>},
+		{ path : '', element: <Home />},
+		{ path : 'friends', element: <Friends />},
+		{ path : 'profile', element: <Profile />},
 		{ path : '*', element: <Navigate to='/' />},
 		]
 	},
