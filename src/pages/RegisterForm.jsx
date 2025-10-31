@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { registerSchema } from "../validation/schema"
 import axios from "axios"
 import { useEffect } from "react"
+import { toast } from "react-toastify"
 
 function RegisterForm({resetForm}) {
 	const {handleSubmit, register, formState, reset} = useForm({
@@ -14,14 +15,14 @@ function RegisterForm({resetForm}) {
 
 	const onSubmit = async data => {
 		try {
-		const resp = await axios.post('http://localhost:8899/api/auth/registe', data)
-		alert(resp.data?.message)
+		const resp = await axios.post('http://localhost:8899/api/auth/register', data)
+		toast.success(resp.data?.message)
 		document.getElementById("register-form").close()
 		reset()
 		}catch(err){
 			console.log(err)
 			const errMsg = err.response?.data?.message || err.message
-			alert(errMsg)
+			toast.error(errMsg)
 		}
 	}
 	return (
