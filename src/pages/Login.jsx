@@ -1,7 +1,14 @@
+import { useState } from "react"
 import { FacebookTitle } from "../icons"
 import RegisterForm from "./RegisterForm"
 
 function Login() {
+	const [resetForm, setResetForm] = useState(true)
+
+	const hdlClose = () => {
+		setResetForm(prv=>!prv) //setResetForm(!resetForm)
+		console.log('Register form close')
+	}
 	return (
 		<>
 			<div className="h-[700px] bg-base-200 pt-20 pb-28">
@@ -34,9 +41,9 @@ function Login() {
 					</div>
 				</div>
 			</div>
-			<dialog id="register-form" className="modal">
+			<dialog id="register-form" className="modal" onClose={hdlClose}>
 				<div className="modal-box">
-					<RegisterForm />
+					<RegisterForm resetForm={resetForm} />
 					<form method="dialog">
 						{/* if there is a button in form, it will close the modal */}
 						<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>

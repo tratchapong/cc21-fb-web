@@ -2,30 +2,26 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { registerSchema } from "../validation/schema"
 import axios from "axios"
+import { useEffect } from "react"
 
-function RegisterForm() {
+function RegisterForm({resetForm}) {
 	const {handleSubmit, register, formState, reset} = useForm({
 		resolver : zodResolver(registerSchema),
-		mode: 'onBlur',
-	  defaultValues: {
-    	firstName: "",
-    	lastName: "",
-			identity: "",
-			password: "",
-			confirmPassword: ""
-  },
+		mode: 'onBlur'
 	})
 	const {isSubmitting, errors} = formState
+	useEffect( ()=>{ reset()}, [resetForm])
 
 	const onSubmit = async data => {
 		try {
-		// alert(JSON.stringify(data, null, 2))
-		// alert(JSON.stringify(errors, null, 2))
-		// const resp = await axios.post('http://localhost:8899/api/auth/me', data)
-		const resp = await axios.post('http://localhost:8899/api/auth/register', data)
-		console.log(resp)
+		const resp = await axios.post('http://localhost:8899/api/auth/registe', data)
+		alert(resp.data?.message)
+		document.getElementById("register-form").close()
+		reset()
 		}catch(err){
 			console.log(err)
+			const errMsg = err.response?.data?.message || err.message
+			alert(errMsg)
 		}
 	}
 	return (
