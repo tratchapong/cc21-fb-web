@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router'
 import UserLayout from '../layouts/UserLayout'
 import { lazy, Suspense } from 'react'
+import useUserStore from '../stores/userStore'
 
 const Login = lazy(()=>import('../pages/Login'))
 const Home = lazy(()=>import('../pages/Home'))
@@ -15,7 +16,7 @@ const guestRouter = createBrowserRouter([
 const userRouter = createBrowserRouter([
 	{ path : '/', element: <UserLayout />,
 		children : [
-		{ path : '', element: <Home />},
+		{ index : true, element: <Home />},
 		{ path : 'friends', element: <Friends />},
 		{ path : 'profile', element: <Profile />},
 		{ path : '*', element: <Navigate to='/' />},
@@ -24,12 +25,11 @@ const userRouter = createBrowserRouter([
 ])
 
 function AppRouter() {
-	const user = null
-	// const user = {username : 'andy'}
+	const user = useUserStore(state=>state.user)
 	const finalRouter = user ? userRouter : guestRouter
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
-			<RouterProvider router={finalRouter}/>
+			<RouterProvider key={user?.id} router={finalRouter}/>
 		</Suspense>
 	)
 }

@@ -6,8 +6,10 @@ import { toast } from "react-toastify"
 import { FacebookTitle } from "../icons"
 import RegisterForm from "./RegisterForm"
 import { authApi } from "../api/authApi"
+import useUserStore from "../stores/userStore"
 
 function Login() {
+	const login = useUserStore(state => state.login)
 	const [resetForm, setResetForm] = useState(true) //for reset RegisterForm
 	const { handleSubmit, register, formState, reset } = useForm({
 		resolver: zodResolver(loginSchema),
@@ -20,10 +22,7 @@ function Login() {
 	const onSubmit = async data => {
 		try {
 			await new Promise(resolve => setTimeout(resolve, 1000))
-			// alert(JSON.stringify(data, null,2))
-			const resp = await authApi.post('/login', data)
-			toast.success(resp.data.message)
-			toast.info(JSON.stringify(resp.data, null, 2))
+			login(data)
 		} catch (err) {
 			const errMsg = err.response?.data.message || err.message
 			toast.error(errMsg)
