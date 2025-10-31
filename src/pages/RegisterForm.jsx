@@ -4,6 +4,7 @@ import { registerSchema } from "../validation/schema"
 import axios from "axios"
 import { useEffect } from "react"
 import { toast } from "react-toastify"
+import { authApi } from "../api/authApi"
 
 function RegisterForm({ resetForm }) {
 	const { handleSubmit, register, formState, reset } = useForm({
@@ -16,7 +17,7 @@ function RegisterForm({ resetForm }) {
 	const onSubmit = async data => {
 		try {
 			await new Promise(resolve => setTimeout(resolve, 1000))
-			const resp = await axios.post('http://localhost:8899/api/auth/register', data)
+			const resp = await authApi.post('/register', data)
 			toast.success(resp.data?.message)
 			document.getElementById("register-form").close()
 			reset()
