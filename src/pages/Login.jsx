@@ -5,7 +5,6 @@ import { loginSchema } from "../validation/schema"
 import { toast } from "react-toastify"
 import { FacebookTitle } from "../icons"
 import RegisterForm from "./RegisterForm"
-import { authApi } from "../api/authApi"
 import useUserStore from "../stores/userStore"
 
 function Login() {
