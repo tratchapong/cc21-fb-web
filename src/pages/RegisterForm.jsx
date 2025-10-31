@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { registerSchema } from "../validation/schema"
-import axios from "axios"
 import { useEffect } from "react"
 import { toast } from "react-toastify"
 import { authApi } from "../api/authApi"
