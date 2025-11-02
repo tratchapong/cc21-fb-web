@@ -36,17 +36,17 @@ function Header() {
 			{/* Right menu */}
 			<div className="flex-1 flex gap-3 items-center justify-end ">
 				<div className="avatar justify-center items-center">
-					<div className="w-10 h-10 rounded-full !flex justify-center items-center bg-gray-300">
+					<div className="w-10 h-10 rounded-full flex! justify-center items-center bg-gray-300">
 						<MenuIcon className="w-5" />
 					</div>
 				</div>
 				<div className="avatar justify-center items-center">
-					<div className="w-10 h-10 rounded-full !flex justify-center items-center bg-gray-300">
+					<div className="w-10 h-10 rounded-full flex! justify-center items-center bg-gray-300">
 						<MessengerIcon className="w-5" />
 					</div>
 				</div>
 				<div className="avatar justify-center items-center">
-					<div className="w-10 h-10 rounded-full !flex justify-center items-center bg-gray-300">
+					<div className="w-10 h-10 rounded-full flex! justify-center items-center bg-gray-300">
 						<NotificationIcon className="w-5" />
 					</div>
 				</div>
