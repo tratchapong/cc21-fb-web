@@ -32,6 +32,7 @@ function PostForm() {
 			})
 			toast.success(resp.data.message)
 			document.getElementById('postform-modal').close()
+			window.location.reload()
 		} catch (err) {
 			console.log(err)
 			const errMsg =  err.response?.data.error || err.message
