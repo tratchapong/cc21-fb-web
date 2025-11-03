@@ -47,8 +47,8 @@ function PostForm() {
 				<Avatar className='w-11 h-11 rounded-full' imgSrc={user.profileImage} />
 				<div className="flex flex-col">
 					<div className="text-sm">{user.firstName} {user.lastName}</div>
-					<select className="select bg-slate-200 select-xs w-full max-w-xs">
-						<option disabled selected>who can see?</option>
+					<select className="select bg-slate-200 select-xs w-full max-w-xs" defaultValue=''>
+						<option disabled selected value=''>who can see?</option>
 						<option>public</option>
 						<option>friends</option>
 					</select>
