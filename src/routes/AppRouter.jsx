@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router'
 import UserLayout from '../layouts/UserLayout'
 import { lazy, Suspense } from 'react'
 import useUserStore from '../stores/userStore'
+import usePostStore from '../stores/postStore'
 
 const Login = lazy(()=>import('../pages/Login'))
 const Home = lazy(()=>import('../pages/Home'))

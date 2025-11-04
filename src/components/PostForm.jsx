@@ -61,6 +61,7 @@ function PostForm() {
 				placeholder={`what do you think? ${user.firstName}`}
 				onChange={e => setMessage(e.target.value)}
 				value={message}
+				rows={message.split('\n').length}
 			></textarea>
 			{addPic && <AddPicture file={file} setFile={setFile} />}
 			<div className="flex border rounded-lg p-2 justify-between items-center">
@@ -70,7 +71,7 @@ function PostForm() {
 					<PhotoIcon2 className='w-7' />
 				</div>
 			</div>
-			<button className="btn btn-sm btn-primary" onClick={hdlCreatePost} disabled={loading}>
+			<button className="btn btn-sm btn-primary" onClick={hdlCreatePost} disabled={loading || (!message.trim() && !file)}>
 				Create Post
 				{loading && <span className="loading loading-dots loading-sm"></span>}
 			</button>
