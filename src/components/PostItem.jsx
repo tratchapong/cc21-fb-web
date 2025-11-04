@@ -1,18 +1,21 @@
 import { CloseIcon, CommentIcon, LikeIcon, ShareIcon, ThreeDotIcon } from "../icons"
 import Avatar from "./Avatar"
-import reactLogo from '../assets/react.svg'
+import TimeAgo from "react-timeago"
 
 function PostItem(props) {
 	const { post } = props
+	// console.log(post)
 	return (
 		<div className="card bg-base-100 shadow-xl">
 			<div className="card-body p-3">
 				<div className="flex justify-between">
 					<div className="flex gap-3">
-						<Avatar className='w-11 h-11 rounded-full' />
+						<Avatar className='w-11 h-11 rounded-full' imgSrc={post.user.profileImage}/>
 						<div className="flex flex-col">
-							<p className="font- text-sm">someone codecamp</p>
-							<p className="text-xs backdrop-opacity-40"> 1d ago </p>
+							<p className="font- text-sm">{post.user.firstName} {post.user.lastName}</p>
+							<p className="text-xs backdrop-opacity-40"> 
+								<TimeAgo date={post.createdAt} />
+							</p>
 						</div>
 					</div>
 					<div className="flex gap-2">
@@ -36,12 +39,11 @@ function PostItem(props) {
 						</div>
 					</div>
 				</div>
-				<p>I love coding..</p>
-				{Math.random() > 0.5 && (
-					<img src={reactLogo} alt="post image"
-						className='p-4 max-h-[200px] object-contain'
-					/>
-				)}
+				<p>{post.message}</p>
+				{ post.image 
+					&& <img src={post.image} alt="post image" className='p-4 max-h-[200px] object-contain' />
+				}
+
 				{/* like, comment number */}
 				<div className="flex justify-between items-center pe-4">
 					<div className="avatar items-end cursor-pointer gap-1">
