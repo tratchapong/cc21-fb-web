@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ActivityIcon, PhotoIcon, VideoIcon } from "../icons"
+import { ActivityIcon, CloseIcon, PhotoIcon, VideoIcon } from "../icons"
 import useUserStore from "../stores/userStore"
 import Avatar from "./Avatar"
 import PostForm from "./PostForm"
@@ -48,7 +48,9 @@ function CreatePost() {
 				<div className="modal-box">
 					{isOpen && <PostForm />}
 					<form method='dialog'>
-						<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">x</button>
+						<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+							<CloseIcon />
+						</button>
 					</form>
 				</div>
 			</dialog>

@@ -3,6 +3,7 @@ import CreatePost from './CreatePost'
 import usePostStore from '../stores/postStore'
 import PostItem from './PostItem'
 import PostFormEdit from './PostFormEdit'
+import { CloseIcon } from '../icons'
 
 function PostContainer() {
 
@@ -25,11 +26,13 @@ function PostContainer() {
 				))}
 			</div>
 			<dialog className='modal' id='editform-modal' onClose={()=>setCurrentPost(null)}>
-				<div className="modal-box">
+				<div className="modal-box ">
 					{currentPost && <PostFormEdit />}
 				</div>
 				<form method='dialog'>
-					<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">x</button>
+					<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+						<CloseIcon />
+					</button>
 				</form>
 			</dialog>
 		</>

@@ -11,6 +11,18 @@ function PostItem(props) {
 	const deletePost = usePostStore(state=> state.deletePost)
 	const updatePost = usePostStore(state=> state.updatePost)
 	const setCurrentPost = usePostStore(state => state.setCurrentPost)
+	const createLike = usePostStore(state => state.createLike)
+	const unLike = usePostStore(state=> state.unLike)
+
+	const haveLike = post.likes.some(el => el.userId === user.id)
+
+	const hdlLikeClick = async () => {
+		if(haveLike) {
+			await unLike(post.id)
+		}else{
+			await createLike({postId : post.id})
+		}
+	}
 
 	const hdlUpdate = () => {
 		setCurrentPost(post)
@@ -83,8 +95,11 @@ function PostItem(props) {
 				<div className="divider h-0 my-0"></div>
 				{/* 3 buttons like, comment, share */}
 				<div className="flex justify-between">
-					<div className="flex gap-3 justify-center items-center cursor-pointer hover:bg-gray-300 rounded-lg py-2 flex-1">
-						<LikeIcon className='w-6' />
+					<div className="flex gap-3 justify-center items-center cursor-pointer hover:bg-gray-300 rounded-lg py-2 flex-1"
+						onClick={hdlLikeClick}
+					>
+						{haveLike && <LikeIcon className='w-10' />}
+						{!haveLike && <LikeIcon className='w-6' />}
 					</div>
 					<div className="flex gap-3 justify-center items-center cursor-pointer hover:bg-gray-300 rounded-lg py-2 flex-1">
 						<CommentIcon className='w-6' />

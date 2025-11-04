@@ -2,10 +2,10 @@ import { useState } from "react"
 import { PhotoIcon2 } from "../icons"
 import useUserStore from "../stores/userStore"
 import Avatar from "./Avatar"
-import AddPicture from "./AddPicture"
 import axios from "axios"
 import { toast } from "react-toastify"
 import usePostStore from "../stores/postStore"
+import AddPictureEdit from "./AddPictureEdit"
 
 
 function PostFormEdit() {
@@ -19,7 +19,16 @@ function PostFormEdit() {
 	const [loading, setLoading] = useState(false)
 
 	const hdlUpdatePost = async () => {
-		console.log('updatePost')
+		try {
+			setLoading(true)
+			const resp = await updatePost(currentPost.id, { message, image })
+			setLoading(false)
+			document.getElementById('editform-modal').close()
+		} catch (err) {
+			setLoading(false)
+			const errMsg = err.response?.data?.error?.message || err.message
+			toast.error(errMsg)
+		}
 	}
 
 	return (
@@ -42,14 +51,8 @@ function PostFormEdit() {
 				value={message}
 				rows={message.split('\n').length}
 			></textarea>
-			{addPic && <AddPicture file={file} setFile={setFile} />}
-			<div className="flex border rounded-lg p-2 justify-between items-center">
-				<p>add with your post</p>
-				<div className="flex justify-center items-center w-10 h-10 rounded-full bg-slate-100
-				 hover:bg-slate-200 active:scale-110" onClick={() => setAddPic(prv => !prv)}>
-					<PhotoIcon2 className='w-7' />
-				</div>
-			</div>
+			<AddPictureEdit file={file} setFile={setFile} image={image} />
+
 			<button className="btn btn-sm btn-primary" onClick={hdlUpdatePost} disabled={loading || (!message.trim() && !file)}>
 				Update Post
 				{loading && <span className="loading loading-dots loading-sm"></span>}

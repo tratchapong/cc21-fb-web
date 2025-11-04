@@ -1,31 +1,41 @@
 import { create } from "zustand";
-import { createPost, deletePost, getAllPosts, updatePost } from "../api/postApi";
+import { createLike, createPost, deletePost, getAllPosts, unLike, updatePost } from "../api/postApi";
 
-const usePostStore = create( (set,get)=> ({
-	posts : [],
-	currentPost : null,
-	createPost : async (body) => {
+const usePostStore = create((set, get) => ({
+	posts: [],
+	currentPost: null,
+	createPost: async (body) => {
 		const resp = await createPost(body)
 		console.log(resp.data)
 		get().getAllPosts()
 		return resp
 	},
-	getAllPosts : async () => {
+	getAllPosts: async () => {
 		const resp = await getAllPosts()
-		set({posts : resp.data.posts})
+		set({ posts: resp.data.posts })
 		return resp
 	},
-	deletePost : async (id) => {
+	deletePost: async (id) => {
 		const resp = await deletePost(id)
 		get().getAllPosts()
 		return resp
 	},
-	updatePost : async (id, body) => {
+	updatePost: async (id, body) => {
 		const resp = await updatePost(id, body)
 		get().getAllPosts()
 		return resp
 	},
-	setCurrentPost : (post) => set({currentPost : post})
+	setCurrentPost: (post) => set({ currentPost: post }),
+	createLike: async (body) => {
+		const resp = await createLike(body)
+		get().getAllPosts()
+		return resp
+	},
+	unLike: async (id) => {
+		const resp = await unLike(id)
+		get().getAllPosts()
+		return resp
+	}
 }))
 
 export default usePostStore
