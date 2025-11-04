@@ -13,9 +13,6 @@ postApi.interceptors.request.use( config => {
 	return config
 })
 
-// const addToken = token => ({
-// 	headers: { Authorization : `Bearer ${token}`}
-// })
 
 export const createPost = (body) => postApi.post('/', body)
 

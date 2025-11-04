@@ -1,36 +1,24 @@
-import { useEffect, useState } from 'react'
-import useUserStore from '../stores/userStore'
+import { useEffect } from 'react'
 import CreatePost from './CreatePost'
-import axios from 'axios'
 import usePostStore from '../stores/postStore'
+import PostItem from './PostItem'
 
 function PostContainer() {
 
-	const token = useUserStore(state=> state.token)
-	const [allPosts, setAllPosts] = useState([])
 	const posts = usePostStore(state => state.posts)
+	const getAllPosts = usePostStore(state => state.getAllPosts)
 
 	useEffect( ()=>{
-		axios.get('http://localhost:8899/api/post', {
-			headers : { Authorization : `Bearer ${token}`}
-		}).then( resp => {
-			setAllPosts( resp.data.posts )
-		})
+		getAllPosts()
 	},[])
+
 	return (
 		<div className='w-[680px] mx-auto min-h-screen my-3 flex flex-col gap-4 rounded-lg bg-amber-200'> 
 			<CreatePost />
-			{JSON.stringify(posts, null, 2)}
-			{/* {allPosts.map(post=>(
-				<div key={post.id} className="card bg-base-100">
-					<div className="card-body">
-						<p>{post.user.firstName} {post.user.lastName}</p>
-						<p>{post.message}</p>
-						<img src={post.image} className='max-h-[120px] object-contain' />
-						<div className="divider"></div>
-					</div>
-				</div>
-			) )} */}
+
+			{posts.map(post=>(
+				<PostItem key={post.id} post={post}/>
+			) )}
 		</div>
 	)
 }
