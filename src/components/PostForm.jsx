@@ -5,11 +5,15 @@ import Avatar from "./Avatar"
 import AddPicture from "./AddPicture"
 import axios from "axios"
 import { toast } from "react-toastify"
+// import { createPost } from "../api/postApi"
+import usePostStore from "../stores/postStore"
 
 
 function PostForm() {
 	const user = useUserStore(state => state.user)
 	const token = useUserStore(state => state.token)
+	const createPost = usePostStore(state => state.createPost)
+	const getAllPosts = usePostStore(state => state.getAllPosts)
 	const [addPic, setAddPic] = useState(false)
 	const [file, setFile] = useState(null)
 	const [message, setMessage] = useState('')
@@ -29,19 +33,20 @@ function PostForm() {
 			}
 			// เอา secure_url ที่ได้รวมเป็น body ส่งให้ backend /api/post {message, image}
 			const body = {message : message, image : imageUrl }
-			const resp = await axios.post('http://localhost:8899/api/post', body, {
-				headers : { Authorization : `Bearer ${token}`}
-			})
-			toast.success(resp.data.message)
+			// const resp = await createPost(body, token)
+			const resp = await createPost(body)
+			// toast.success(resp.data.message)
+			console.log(resp)
 			setLoading(false)
 			document.getElementById('postform-modal').close()
-			window.location.reload()
+			// window.location.reload()
+			// getAllPosts(token)
 		} catch (err) {
 			console.log(err)
-			const errMsg =  err.response?.data.error || err.message
+			const errMsg =  err.response?.data?.error || err.message
 			toast.error(errMsg)
 			setLoading(false)
-		}
+		} 
 	}
 	return (
 		<div className="flex flex-col gap-2">
