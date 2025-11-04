@@ -18,3 +18,7 @@ export const createPost = (body) => postApi.post('/', body)
 
 export const getAllPosts = () => postApi.get('/')
 
+export const deletePost = id => postApi.delete(`/${id}`)
+
+export const updatePost = (id, body) => postApi.put(`/${id}`, body)
+
