@@ -6,7 +6,6 @@ const usePostStore = create((set, get) => ({
 	currentPost: null,
 	createPost: async (body) => {
 		const resp = await createPost(body)
-		console.log(resp.data)
 		get().getAllPosts()
 		return resp
 	},

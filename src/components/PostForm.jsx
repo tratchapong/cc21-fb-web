@@ -7,6 +7,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 // import { createPost } from "../api/postApi"
 import usePostStore from "../stores/postStore"
+import uploadCloud from "../utils/uploadCloud"
 
 
 function PostForm() {
@@ -31,11 +32,7 @@ function PostForm() {
 		try {
 			// upload file ไปที่ cloudinary => ได้ secure_url
 			if (file) {
-				const formData = new FormData()
-				formData.append('file', file)
-				formData.append('upload_preset', 'cc21-upload')
-				const resp = await axios.post('https://api.cloudinary.com/v1_1/tratchapong/image/upload', formData)
-				imageUrl = resp.data.secure_url
+				imageUrl = await uploadCloud(file)
 			}
 			// เอา secure_url ที่ได้รวมเป็น body ส่งให้ backend /api/post {message, image}
 			const body = {message : message, image : imageUrl }

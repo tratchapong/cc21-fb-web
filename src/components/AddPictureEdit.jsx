@@ -1,7 +1,8 @@
 import { PhotoIcon2 } from "../icons"
 
 function AddPictureEdit(props) {
-	const { file, setFile, image } = props
+	const { file, setFile, image, setImage } = props
+	console.log(file)
 
 	const hdlFileChange = (e) => {
 		setFile(e.target.files[0])
@@ -10,6 +11,7 @@ function AddPictureEdit(props) {
 		e.stopPropagation()
 		document.getElementById('input-file').value = ''
 		setFile(null)
+		setImage('')
 	}
 
 	return (
@@ -18,15 +20,21 @@ function AddPictureEdit(props) {
 				onClick={() => document.getElementById('input-file').click()} >
 				<input type="file" id="input-file" className="hidden"
 					onChange={hdlFileChange} />
-				{ image && 	<img src={image} className="h-full block mx-auto max-h-[300px] object-contain" /> }
+				{image && !file &&
+					<>
+						<img src={image} className="h-full block mx-auto max-h-[300px] object-contain" />
+						<button className="btn btn-sm btn-circle btn-dash btn-error absolute top-1 right-1 opacity-60"
+							onClick={removePic}>x</button>
+					</>
+				}
 				{file &&
 					<>
 						<img src={URL.createObjectURL(file)} className="h-full block mx-auto max-h-[300px] object-contain" />
 						<button className="btn btn-sm btn-circle btn-dash btn-error absolute top-1 right-1 opacity-60"
-						 onClick={removePic}>x</button>
+							onClick={removePic}>x</button>
 					</>
 				}
-				{!file || image && <PhotoIcon2 className='w-10 absolute top-10 right-1/2 translate-1/2 opacity-40' />}
+				{!file && !image && <PhotoIcon2 className='w-10 absolute top-10 right-1/2 translate-1/2 opacity-40' />}
 			</div>
 		</div>
 	)

@@ -6,6 +6,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 import usePostStore from "../stores/postStore"
 import AddPictureEdit from "./AddPictureEdit"
+import uploadCloud from "../utils/uploadCloud"
 
 
 function PostFormEdit() {
@@ -19,15 +20,20 @@ function PostFormEdit() {
 	const [loading, setLoading] = useState(false)
 
 	const hdlUpdatePost = async () => {
+		let imageUrl = ''
+		setLoading(true)
 		try {
-			setLoading(true)
-			const resp = await updatePost(currentPost.id, { message, image })
+			if (file) {
+				imageUrl = await uploadCloud(file)
+			}
+			const body = {message : message, image : imageUrl }
+			const resp = await updatePost(currentPost.id, body)
 			setLoading(false)
 			document.getElementById('editform-modal').close()
 		} catch (err) {
-			setLoading(false)
 			const errMsg = err.response?.data?.error?.message || err.message
 			toast.error(errMsg)
+			setLoading(false)
 		}
 	}
 
@@ -40,7 +46,7 @@ function PostFormEdit() {
 				<div className="flex flex-col">
 					<div className="text-sm">{user.firstName} {user.lastName}</div>
 					<select className="select bg-slate-200 select-xs w-full max-w-xs" defaultValue=''>
-						<option disabled selected value=''>who can see?</option>
+						<option disabled value=''>who can see?</option>
 						<option>public</option>
 						<option>friends</option>
 					</select>
@@ -51,7 +57,7 @@ function PostFormEdit() {
 				value={message}
 				rows={message.split('\n').length}
 			></textarea>
-			<AddPictureEdit file={file} setFile={setFile} image={image} />
+			<AddPictureEdit file={file} setFile={setFile} image={image} setImage={setImage}/>
 
 			<button className="btn btn-sm btn-primary" onClick={hdlUpdatePost} disabled={loading || (!message.trim() && !file)}>
 				Update Post
