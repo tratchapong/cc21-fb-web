@@ -13,7 +13,6 @@ function PostFormEdit() {
 	const user = useUserStore(state => state.user)
 	const updatePost = usePostStore(state => state.updatePost)
 	const currentPost = usePostStore(state => state.currentPost)
-	const [addPic, setAddPic] = useState(false)
 	const [file, setFile] = useState(null)
 	const [message, setMessage] = useState(currentPost.message)
 	const [image, setImage] = useState(currentPost.image)
