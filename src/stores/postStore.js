@@ -26,8 +26,8 @@ const usePostStore = create((set, get) => ({
 		return resp
 	},
 	setCurrentPost: (post) => set({ currentPost: post }),
-	createLike: async (body) => {
-		const resp = await createLike(body)
+	createLike: async (id) => {
+		const resp = await createLike(id)
 		get().getAllPosts()
 		return resp
 	},

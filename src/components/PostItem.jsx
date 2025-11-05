@@ -9,7 +9,6 @@ function PostItem(props) {
 	const { post } = props
 	const user = useUserStore(state => state.user)
 	const deletePost = usePostStore(state=> state.deletePost)
-	const updatePost = usePostStore(state=> state.updatePost)
 	const setCurrentPost = usePostStore(state => state.setCurrentPost)
 	const createLike = usePostStore(state => state.createLike)
 	const unLike = usePostStore(state=> state.unLike)
@@ -20,7 +19,7 @@ function PostItem(props) {
 		if(haveLike) {
 			await unLike(post.id)
 		}else{
-			await createLike({postId : post.id})
+			await createLike(post.id)
 		}
 	}
 
@@ -86,7 +85,7 @@ function PostItem(props) {
 						<div className="w-7 h-7 rounded-full flex! justify-center items-center bg-blue-200">
 							<LikeIcon />
 						</div>
-						<p>99 likes</p>
+						<p>{post.likes.length} likes</p>
 					</div>
 					<div className="flex">
 						<p className="opacity-60">3 comments</p>
@@ -98,7 +97,7 @@ function PostItem(props) {
 					<div className="flex gap-3 justify-center items-center cursor-pointer hover:bg-gray-300 rounded-lg py-2 flex-1"
 						onClick={hdlLikeClick}
 					>
-						{haveLike && <LikeIcon className='w-10' />}
+						{haveLike && <LikeIcon className='w-10 outline-primary outline-1 rounded outline-offset-2' />}
 						{!haveLike && <LikeIcon className='w-6' />}
 					</div>
 					<div className="flex gap-3 justify-center items-center cursor-pointer hover:bg-gray-300 rounded-lg py-2 flex-1">

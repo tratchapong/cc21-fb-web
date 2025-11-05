@@ -10,7 +10,7 @@ function PostContainer() {
 	const posts = usePostStore(state => state.posts)
 	const getAllPosts = usePostStore(state => state.getAllPosts)
 	const currentPost = usePostStore(state => state.currentPost)
-  const setCurrentPost = usePostStore(state => state.setCurrentPost)
+	const setCurrentPost = usePostStore(state => state.setCurrentPost)
 
 	useEffect(() => {
 		getAllPosts()
@@ -25,15 +25,15 @@ function PostContainer() {
 					<PostItem key={post.id} post={post} />
 				))}
 			</div>
-			<dialog className='modal' id='editform-modal' onClose={()=>setCurrentPost(null)}>
+			<dialog className='modal' id='editform-modal' onClose={() => setCurrentPost(null)}>
 				<div className="modal-box ">
 					{currentPost && <PostFormEdit />}
+					<form method='dialog'>
+						<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+							<CloseIcon />
+						</button>
+					</form>
 				</div>
-				<form method='dialog'>
-					<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-						<CloseIcon />
-					</button>
-				</form>
 			</dialog>
 		</>
 	)

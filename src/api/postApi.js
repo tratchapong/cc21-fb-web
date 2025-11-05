@@ -22,6 +22,6 @@ export const deletePost = id => postApi.delete(`/${id}`)
 
 export const updatePost = (id, body) => postApi.put(`/${id}`, body)
 
-export const createLike = (body)=>postApi.post('/like', body)
+export const createLike = (id)=>postApi.post(`/${id}/like`)
 
-export const unLike = (id)=> postApi.delete(`/like/${id}`)
+export const unLike = (id)=> postApi.delete(`/${id}/like`)

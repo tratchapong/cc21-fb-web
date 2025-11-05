@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { PhotoIcon2 } from "../icons"
 import useUserStore from "../stores/userStore"
 import Avatar from "./Avatar"
@@ -16,6 +16,14 @@ function PostForm() {
 	const [file, setFile] = useState(null)
 	const [message, setMessage] = useState('')
 	const [loading, setLoading] = useState(false)
+	const focusRef = useRef()
+
+	useEffect(()=>{
+		console.log(focusRef.current)
+		setTimeout(()=>{
+			focusRef.current.focus()
+		},0)
+	},[])
 
 	const hdlCreatePost = async () => {
 		let imageUrl = ''
@@ -51,13 +59,14 @@ function PostForm() {
 				<div className="flex flex-col">
 					<div className="text-sm">{user.firstName} {user.lastName}</div>
 					<select className="select bg-slate-200 select-xs w-full max-w-xs" defaultValue=''>
-						<option disabled selected value=''>who can see?</option>
+						<option disabled value=''>who can see?</option>
 						<option>public</option>
 						<option>friends</option>
 					</select>
 				</div>
 			</div>
 			<textarea className="textarea textarea-ghost w-full"
+				ref={focusRef}
 				placeholder={`what do you think? ${user.firstName}`}
 				onChange={e => setMessage(e.target.value)}
 				value={message}
